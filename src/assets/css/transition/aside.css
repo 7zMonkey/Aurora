@@ -1,0 +1,12 @@
+.aside-enter {
+  @apply w-0;
+}
+.aside-enter-active {
+  @apply transition-all;
+}
+.aside-exit {
+  @apply w-0;
+}
+.aside-exit-active {
+  @apply transition-all;
+}
