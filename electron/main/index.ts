@@ -41,6 +41,8 @@ const indexHtml = join(process.env.DIST, 'index.html')
 
 async function createWindow() {
   win = new BrowserWindow({
+    width: 1200,
+    height: 800,
     title: 'Main window',
     icon: join(process.env.PUBLIC, 'favicon.ico'),
     webPreferences: {

@@ -11,4 +11,3 @@ Use `electric+react` to implement the `markdown` editor, supporting plugin theme
 3. Running using pnpm `pnpm run dev`
 
 > If there is no pnpm, [Install pnpm](https://pnpm.io/installation) `npm install pnpm -g`
-
