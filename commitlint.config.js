@@ -13,7 +13,8 @@ module.exports = {
         'test', // 测试
         'revert', // 回滚
         'config', // 构建过程或辅助工具的变动
-        'chore' // 其他改动
+        'chore', // 其他改动
+        'wip' // 开发中
       ]
     ]
   }
