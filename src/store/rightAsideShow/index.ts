@@ -1,15 +1,36 @@
 import { create } from 'zustand'
+import { Icon } from '@icon-park/react/es/all'
+import { MenuFold, MenuUnfold } from '@icon-park/react'
 
-type Store = {
-  leftAsideShow: true | false
-  leftAsideShowToggle: () => void
-  leftAsideShowHide: () => void
-  leftAsideShowShow: () => void
+export type Store = {
+  rightAsideShow: true | false
+  rightAsideShowTitle: string
+  rightAsideShowIcon: Icon
+  rightAsideShowToggle: () => void
+  rightAsideShowHide: () => void
+  rightAsideShowShow: () => void
 }
 
-export const useStore = create<Store>()((set) => ({
-  leftAsideShow: true,
-  leftAsideShowToggle: () => set((state) => ({ leftAsideShow: !state.leftAsideShow })),
-  leftAsideShowHide: () => set((state) => ({ leftAsideShow: false })),
-  leftAsideShowShow: () => set((state) => ({ leftAsideShow: true }))
+export const useRightAsideShowStore = create<Store>()((set) => ({
+  rightAsideShow: true,
+  rightAsideShowIcon: MenuFold,
+  rightAsideShowTitle: '收起',
+  rightAsideShowToggle: () =>
+    set((state) => ({
+      rightAsideShow: !state.rightAsideShow,
+      rightAsideShowTitle: state.rightAsideShow ? '展开' : '收起',
+      rightAsideShowIcon: state.rightAsideShow ? MenuFold : MenuUnfold
+    })),
+  rightAsideShowHide: () =>
+    set(() => ({
+      rightAsideShow: false,
+      rightAsideShowTitle: '展开',
+      rightAsideShowIcon: MenuFold
+    })),
+  rightAsideShowShow: () =>
+    set(() => ({
+      rightAsideShow: true,
+      rightAsideShowTitle: '收起',
+      rightAsideShowIcon: MenuUnfold
+    }))
 }))

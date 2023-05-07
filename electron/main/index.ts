@@ -2,7 +2,13 @@ import { app, BrowserWindow, shell, ipcMain } from 'electron'
 import { release } from 'node:os'
 import { join } from 'node:path'
 import { update } from './update'
+import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer'
 
+app.whenReady().then(() => {
+  installExtension([REACT_DEVELOPER_TOOLS, 'copnnlbbmgdflldkbnemmccblmgcnlmo'])
+    .then((name: String) => console.log(`Added Extension:  ${name}`))
+    .catch((err: String) => console.log('An error occurred: ', err))
+})
 // The built directory structure
 //
 // ├─┬ dist-electron
@@ -41,6 +47,8 @@ const indexHtml = join(process.env.DIST, 'index.html')
 
 async function createWindow() {
   win = new BrowserWindow({
+    width: 1200,
+    height: 800,
     title: 'Main window',
     icon: join(process.env.PUBLIC, 'favicon.ico'),
     webPreferences: {

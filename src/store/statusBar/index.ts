@@ -1,23 +1,46 @@
 import { create } from 'zustand'
-import { IconType } from '@icon-park/react/es/all'
+import { Icon } from '@icon-park/react/es/all'
 
-type StatusBar = {
-  id: String
-  name: String
-  icon: IconType
+export type StatusBarItem = {
+  id: string
+  name: string
+  icon: Icon | undefined
   position: 'right' | 'left'
-  title: String
+  title: string
   click: () => void | undefined
   priority: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10
 }
-type Store = {
-  statusBar: Array<StatusBar>
-  addStatusBar: (...content: Array<StatusBar>) => void
+
+export type Store = {
+  statusBar: Array<StatusBarItem>
+  leftStatusBar: Array<StatusBarItem>
+  rightStatusBar: Array<StatusBarItem>
+  addStatusBar: (...content: Array<StatusBarItem>) => void
   removeStatusBar: (id: String) => void
 }
 
-export const useStore = create<Store>()((set) => ({
+export const useStatusBarStore = create<Store>()((set) => ({
   statusBar: [],
-  addStatusBar: (...content: Array<StatusBar>) => set((state) => ({ statusBar: state.statusBar.concat(content) })),
-  removeStatusBar: (id: String) => set((state) => ({ statusBar: state.statusBar.filter((e) => e.id !== id) }))
+  leftStatusBar: [],
+  rightStatusBar: [],
+  addStatusBar: (...content: Array<StatusBarItem>) => {
+    const leftStatusBarContent: Array<StatusBarItem> = content.filter((e) => e.position !== 'left')
+    const rightStatusBarContent: Array<StatusBarItem> = content.filter((e) => e.position !== 'right')
+    return set((state) => ({
+      statusBar: state.statusBar.concat(content).filter((e, i, a) => a.findIndex((b) => b.id === e.id) === i),
+      leftStatusBar: state.leftStatusBar
+        .concat(leftStatusBarContent)
+        .filter((e, i, a) => a.findIndex((b) => b.id === e.id) === i),
+      rightStatusBar: state.rightStatusBar
+        .concat(rightStatusBarContent)
+        .filter((e, i, a) => a.findIndex((b) => b.id === e.id) === i)
+    }))
+  },
+  removeStatusBar: (id: String) => {
+    return set((state) => ({
+      statusBar: state.statusBar.filter((e) => e.id !== id),
+      leftStatusBar: state.leftStatusBar.filter((e) => e.id !== id),
+      rightStatusBar: state.rightStatusBar.filter((e) => e.id !== id)
+    }))
+  }
 }))
